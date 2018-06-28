@@ -45,6 +45,9 @@ def evaluate_orderings(path, manifest, ordered_ops, unordered_op):
    print grouped_results
 
    #TODO: print out the orderings  as groups and display their base manifest diffs
+   #yaml compare instead of alphabetized diff
+   #accept multiple ops files instead of just one as input
+
    #orderings[x] maps to the values inside grouped_results
 
 def main(argv):
