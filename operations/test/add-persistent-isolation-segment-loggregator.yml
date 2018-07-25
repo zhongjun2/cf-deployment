@@ -1,0 +1,629 @@
+---
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: isolated-doppler
+    azs:
+    - z1
+    instances: 1
+    vm_type: minimal
+    stemcell: default
+    networks:
+    - name: default
+    jobs:
+    - name: consul_agent
+      release: consul
+      consumes:
+        consul_common: {from: consul_common_link}
+        consul_server: nil
+        consul_client: {from: consul_client_link}
+      properties:
+        consul:
+          agent:
+            services:
+              isolated_doppler:
+                check:
+                  name: dns_health_check
+                  script: /var/vcap/jobs/doppler/bin/dns_health_check
+                  interval: 3s
+    - name: doppler
+      release: loggregator
+      provides:
+        doppler: {as: isolated_doppler, shared: true}
+        loggregator: {as: isolated_loggregator, shared: true}
+      properties:
+        doppler:
+          disable_announce: true
+        loggregator:
+          disable_syslog_drains: true
+          tls:
+            ca_cert: "((isolated_loggregator_ca.certificate))"
+            doppler:
+              cert: "((isolated_loggregator_tls_doppler.certificate))"
+              key: "((isolated_loggregator_tls_doppler.private_key))"
+
+- type: replace
+  path: /instance_groups/-
+  value:
+    name: isolated-log-api
+    azs:
+    - z1
+    instances: 1
+    vm_type: minimal
+    stemcell: default
+    networks:
+    - name: default
+    jobs:
+    - name: consul_agent
+      release: consul
+      consumes:
+        consul_common: {from: consul_common_link}
+        consul_server: nil
+        consul_client: {from: consul_client_link}
+      properties:
+        consul:
+          agent:
+            services:
+              isolated_loggregator_trafficcontroller:
+                check:
+                  name: dns_health_check
+                  script: /var/vcap/jobs/loggregator_trafficcontroller/bin/dns_health_check
+                  interval: 3s
+              isolated_reverse_log_proxy:
+                check:
+                  name: dns_health_check
+                  script: /var/vcap/jobs/reverse_log_proxy/bin/dns_health_check
+                  interval: 3s
+    - name: loggregator_trafficcontroller
+      release: loggregator
+      consumes:
+        doppler: {from: isolated_doppler}
+      provides:
+        trafficcontroller: {as: isolated_trafficcontroller}
+      properties:
+        uaa:
+          internal_url: https://uaa.service.cf.internal:8443
+          ca_cert: "((uaa_ca.certificate))"
+        loggregator:
+          tls:
+            cc_trafficcontroller:
+              cert: "((isolated_loggregator_tls_cc_tc.certificate))"
+              key: "((isolated_loggregator_tls_cc_tc.private_key))"
+            ca_cert: "((isolated_loggregator_ca.certificate))"
+            trafficcontroller:
+              cert: "((isolated_loggregator_tls_tc.certificate))"
+              key: "((isolated_loggregator_tls_tc.private_key))"
+          uaa:
+            client_secret: "((uaa_clients_isolated_doppler_secret))"
+            client: isolated-doppler
+        system_domain: "((system_domain))"
+        ssl:
+          skip_cert_verify: true
+        cc:
+          internal_service_hostname: "cloud-controller-ng.service.cf.internal"
+          tls_port: 9023
+          mutual_tls:
+            ca_cert: "((service_cf_internal_ca.certificate))"
+    - name: reverse_log_proxy
+      release: loggregator
+      consumes:
+        doppler: {from: isolated_doppler}
+      provides:
+        reverse_log_proxy: {as: isolated_reverse_log_proxy, shared: true}
+      properties:
+        loggregator:
+          tls:
+            ca_cert: "((isolated_loggregator_ca.certificate))"
+            reverse_log_proxy:
+              cert: "((isolated_loggregator_tls_rlp.certificate))"
+              key: "((isolated_loggregator_tls_rlp.private_key))"
+    - name: route_registrar
+      release: routing
+      properties:
+        route_registrar:
+          routes:
+          - name: isolated-loggregator
+            port: 8080
+            registration_interval: 20s
+            uris:
+            - iso-loggregator.((system_domain))
+          - name: isolated-doppler
+            port: 8081
+            registration_interval: 20s
+            uris:
+            - iso-doppler.((system_domain))
+            - "*.iso-doppler.((system_domain))"
+
+- type: replace
+  path: /instance_groups/name=uaa/jobs/name=uaa/properties/uaa/clients/isolated-doppler?
+  value:
+    authorities: uaa.resource
+    override: true
+    authorized-grant-types: client_credentials
+    secret: "((uaa_clients_isolated_doppler_secret))"
+
+- type: replace
+  path: /instance_groups/name=adapter/jobs/name=adapter/consumes?
+  value:
+    reverse_log_proxy: {from: reverse_log_proxy}
+
+- type: replace
+  path: /instance_groups/name=log-api/jobs/name=reverse_log_proxy/consumes?
+  value:
+    doppler: {from: doppler}
+
+- type: replace
+  path: /instance_groups/name=log-api/jobs/name=reverse_log_proxy_gateway/consumes?
+  value:
+    reverse_log_proxy: {from: reverse_log_proxy}
+
+- type: replace
+  path: /instance_groups/name=log-api/jobs/name=loggregator_trafficcontroller/consumes?
+  value:
+    doppler: {from: doppler}
+
+- type: remove
+  path: /addons/name=prom_scraper
+
+- type: remove
+  path: /addons/name=loggregator_agent
+
+- type: replace
+  path: "/instance_groups/name=consul/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=nats/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=adapter/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=database/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=diego-api/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=uaa/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=singleton-blobstore/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=api/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=cc-worker/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=scheduler/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=doppler/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=diego-cell/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=log-api/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: doppler
+    properties:
+      loggregator:
+        tls:
+          ca_cert: "((loggregator_ca.certificate))"
+          agent:
+            cert: "((loggregator_tls_agent.certificate))"
+            key: "((loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=consul/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=nats/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=adapter/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=database/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=diego-api/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=uaa/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=singleton-blobstore/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=api/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=cc-worker/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=scheduler/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=doppler/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=diego-cell/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=log-api/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: loggregator
+- type: replace
+  path: "/instance_groups/name=isolated-diego-cell/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: isolated_doppler
+    properties:
+      doppler:
+        addr: "isolated-doppler.service.cf.internal"
+      loggregator:
+        tls:
+          ca_cert: "((isolated_loggregator_ca.certificate))"
+          agent:
+            cert: "((isolated_loggregator_tls_agent.certificate))"
+            key: "((isolated_loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=isolated-doppler/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: isolated_doppler
+    properties:
+      doppler:
+        addr: "isolated-doppler.service.cf.internal"
+      loggregator:
+        tls:
+          ca_cert: "((isolated_loggregator_ca.certificate))"
+          agent:
+            cert: "((isolated_loggregator_tls_agent.certificate))"
+            key: "((isolated_loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=isolated-log-api/jobs/-"
+  value:
+    name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        from: isolated_doppler
+    properties:
+      doppler:
+        addr: "isolated-doppler.service.cf.internal"
+      loggregator:
+        tls:
+          ca_cert: "((isolated_loggregator_ca.certificate))"
+          agent:
+            cert: "((isolated_loggregator_tls_agent.certificate))"
+            key: "((isolated_loggregator_tls_agent.private_key))"
+- type: replace
+  path: "/instance_groups/name=isolated-diego-cell/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: isolated_loggregator
+- type: replace
+  path: "/instance_groups/name=isolated-doppler/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: isolated_loggregator
+- type: replace
+  path: "/instance_groups/name=isolated-log-api/jobs/-"
+  value:
+    name: prom_scraper
+    release: loggregator-agent
+    consumes:
+      loggregator:
+        from: isolated_loggregator
+
+- type: replace
+  path: "/instance_groups/name=isolated-diego-cell/jobs/name=rep/properties/loggregator?"
+  value:
+    use_v2_api: true
+    ca_cert: "((isolated_loggregator_ca.certificate))"
+    cert: "((isolated_loggregator_tls_agent.certificate))"
+    key: "((isolated_loggregator_tls_agent.private_key))"
+
+- type: replace
+  path: "/instance_groups/name=isolated-diego-cell/jobs/name=route_emitter/properties/loggregator?"
+  value:
+    use_v2_api: true
+    ca_cert: "((isolated_loggregator_ca.certificate))"
+    cert: "((isolated_loggregator_tls_agent.certificate))"
+    key: "((isolated_loggregator_tls_agent.private_key))"
+
+- type: replace
+  path: /variables/-
+  value:
+    name: isolated_loggregator_ca
+    type: certificate
+    options:
+      is_ca: true
+      common_name: isolated-loggregatorCA
+
+- type: replace
+  path: /variables/-
+  value:
+    name: isolated_loggregator_tls_doppler
+    type: certificate
+    options:
+      ca: isolated_loggregator_ca
+      common_name: doppler
+      extended_key_usage:
+      - client_auth
+      - server_auth
+- type: replace
+  path: /variables/-
+  value:
+    name: isolated_loggregator_tls_agent
+    type: certificate
+    options:
+      ca: isolated_loggregator_ca
+      common_name: metron
+      extended_key_usage:
+      - client_auth
+      - server_auth
+- type: replace
+  path: /variables/-
+  value:
+    name: isolated_loggregator_tls_tc
+    type: certificate
+    options:
+      ca: isolated_loggregator_ca
+      common_name: trafficcontroller
+      extended_key_usage:
+      - client_auth
+      - server_auth
+- type: replace
+  path: /variables/-
+  value:
+    name: isolated_loggregator_tls_rlp
+    type: certificate
+    options:
+      ca: isolated_loggregator_ca
+      common_name: reverselogproxy
+      extended_key_usage:
+      - client_auth
+      - server_auth
+- type: replace
+  path: /variables/-
+  value:
+    name: isolated_loggregator_tls_cc_tc
+    type: certificate
+    options:
+      ca: service_cf_internal_ca
+      common_name: trafficcontroller
+      extended_key_usage:
+      - client_auth
+- type: replace
+  path: /variables/-
+  value:
+    name: uaa_clients_isolated_doppler_secret
+    type: password
