@@ -1,5 +1,16 @@
 ---
 - type: replace
+  path: /addons/name=bosh-dns-aliases/jobs/name=bosh-dns-aliases/properties/aliases/-
+  value:
+    domain: "isolated-doppler.service.cf.internal"
+    targets:
+    - query: "*"
+      instance_group: isolated-doppler
+      deployment: cf
+      network: default
+      domain: bosh
+
+- type: replace
   path: /instance_groups/-
   value:
     name: isolated-doppler
