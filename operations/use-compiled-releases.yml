@@ -180,13 +180,13 @@
   value: 18315d5d4287b7d92f278d4543cefa66ee21a492
 - path: /releases/name=staticfile-buildpack/url
   type: replace
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/staticfile-buildpack-1.4.29-ubuntu-trusty-3586.27-20180815-233204-987396666.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/staticfile-buildpack-1.4.31-ubuntu-trusty-3586.27-20180816-003138-009672544.tgz
 - path: /releases/name=staticfile-buildpack/version
   type: replace
-  value: 1.4.29
+  value: 1.4.31
 - path: /releases/name=staticfile-buildpack/sha1
   type: replace
-  value: d91e4a3f75772f07f4f1ce342a6efcc12ef4cb2a
+  value: 1a1ba881ef22430ac534d1c897f8e21935e45409
 - path: /releases/name=dotnet-core-buildpack/url
   type: replace
   value: https://storage.googleapis.com/cf-deployment-compiled-releases/dotnet-core-buildpack-2.1.4-ubuntu-trusty-3586.27-20180809-183255-30259044.tgz
