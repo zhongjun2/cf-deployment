@@ -180,13 +180,13 @@
   value: d350be3cfe4b108dc39b204043e3760acfea1747
 - type: replace
   path: /releases/name=staticfile-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/staticfile-buildpack-1.4.29-ubuntu-xenial-97.12-20180817-001907-612540536.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/staticfile-buildpack-1.4.29-ubuntu-xenial-97.12-20180817-003549-352088243.tgz
 - type: replace
   path: /releases/name=staticfile-buildpack/version
   value: 1.4.29
 - type: replace
   path: /releases/name=staticfile-buildpack/sha1
-  value: ee56526dcf2a5a06adddf7f08ecbb321b0c168b8
+  value: 2759cc0d7ab7911ee7704159e0f6122ed814da8d
 - type: replace
   path: /releases/name=dotnet-core-buildpack/url
   value: https://storage.googleapis.com/cf-deployment-compiled-releases/dotnet-core-buildpack-2.1.4-ubuntu-xenial-97.12-20180817-001408-955866324.tgz
