@@ -207,13 +207,13 @@
   value: 46d2f7db78158e3efd80949d33356abe4c4d4dcf
 - type: replace
   path: /releases/name=bpm/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/bpm-0.10.0-ubuntu-trusty-3586.36-20180816-214341-709792228.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/bpm-0.11.0-ubuntu-trusty-3586.36-20180817-003711-498868987.tgz
 - type: replace
   path: /releases/name=bpm/version
-  value: 0.10.0
+  value: 0.11.0
 - type: replace
   path: /releases/name=bpm/sha1
-  value: 1c9b9ec45070a3d1452eedd00183df716f0d81e3
+  value: f128c6df6ad0b1196cc54a941d089ceee7a24a15
 - type: replace
   path: /releases/name=loggregator-agent/url
   value: https://storage.googleapis.com/cf-deployment-compiled-releases/loggregator-agent-2.0-ubuntu-trusty-3586.36-20180816-214224-880639597.tgz
