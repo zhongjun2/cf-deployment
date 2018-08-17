@@ -1,237 +1,237 @@
 - type: replace
   path: /releases/name=cf-mysql/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-mysql-36.15.0-ubuntu-xenial-97.12-20180816-034510-176160532.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-mysql-36.15.0-ubuntu-xenial-97.12-20180817-001928-874637409.tgz
 - type: replace
   path: /releases/name=cf-mysql/version
   value: 36.15.0
 - type: replace
   path: /releases/name=cf-mysql/sha1
-  value: 1f28b28465b2b3bb901d96d55b1236d4009f2f98
+  value: 8ddff280895adf7be70b2ff509b27bed338fc3d5
 - type: replace
   path: /releases/name=capi/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/capi-1.65.0-ubuntu-xenial-97.12-20180816-034446-833313286.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/capi-1.65.0-ubuntu-xenial-97.12-20180817-001854-085737242.tgz
 - type: replace
   path: /releases/name=capi/version
   value: 1.65.0
 - type: replace
   path: /releases/name=capi/sha1
-  value: 3457bdcdb13f543ad6783ea924035bd103505872
+  value: 9b8d822ff3b7f93a9c24f1cd6350ee6c724346d5
 - type: replace
   path: /releases/name=binary-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/binary-buildpack-1.0.21-ubuntu-xenial-97.12-20180816-034137-584705882.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/binary-buildpack-1.0.21-ubuntu-xenial-97.12-20180817-001436-302648275.tgz
 - type: replace
   path: /releases/name=binary-buildpack/version
   value: 1.0.21
 - type: replace
   path: /releases/name=binary-buildpack/sha1
-  value: 3b3c08781f1d8eddb3ce9d1233bdf766ad0ce1bd
+  value: 383b0a85015bc73b88c0325102ab946a5a5a6dde
 - type: replace
   path: /releases/name=cf-networking/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-networking-2.13.0-ubuntu-xenial-97.12-20180816-034325-853802454.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-networking-2.13.0-ubuntu-xenial-97.12-20180817-001737-237035211.tgz
 - type: replace
   path: /releases/name=cf-networking/version
   value: 2.13.0
 - type: replace
   path: /releases/name=cf-networking/sha1
-  value: 262c6b92969d09ea98fde3bb2a43d994451c13d2
+  value: 2c6a9467beaa26e66255e8d547723e1b4c5d9041
 - type: replace
   path: /releases/name=uaa/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/uaa-60.2-ubuntu-xenial-97.12-20180816-034259-642436176.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/uaa-60.2-ubuntu-xenial-97.12-20180817-001726-27857693.tgz
 - type: replace
   path: /releases/name=uaa/version
   value: "60.2"
 - type: replace
   path: /releases/name=uaa/sha1
-  value: 702989692b5382aac509f6ea0c533f97f72f8b45
+  value: c9733661e7edeab16361d82ec54a40d9c78aee97
 - type: replace
   path: /releases/name=nats/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/nats-25-ubuntu-xenial-97.12-20180816-034259-626189792.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/nats-25-ubuntu-xenial-97.12-20180817-001737-235501908.tgz
 - type: replace
   path: /releases/name=nats/version
   value: "25"
 - type: replace
   path: /releases/name=nats/sha1
-  value: 47f46b4f51d673bcff37cd440494545869ee8565
+  value: 6456a2765827314163aa296bf41c6087fb56b9fd
 - type: replace
   path: /releases/name=diego/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/diego-2.16.0-ubuntu-xenial-97.12-20180816-034509-97996599.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/diego-2.16.0-ubuntu-xenial-97.12-20180817-001907-613435783.tgz
 - type: replace
   path: /releases/name=diego/version
   value: 2.16.0
 - type: replace
   path: /releases/name=diego/sha1
-  value: dd238c432a0203272b4d6d3f898d97fd7c3c0389
+  value: 1e2aa43e91d15335806155864390552e76ddc9df
 - type: replace
   path: /releases/name=routing/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/routing-0.180.0-ubuntu-xenial-97.12-20180816-034408-177275776.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/routing-0.180.0-ubuntu-xenial-97.12-20180817-001726-197600764.tgz
 - type: replace
   path: /releases/name=routing/version
   value: 0.180.0
 - type: replace
   path: /releases/name=routing/sha1
-  value: beeb5f4c2dfc879e1909f18cbe675d0289024865
+  value: 4efd284b992b060cdcdb7b53c92ad77e3e846a6f
 - type: replace
   path: /releases/name=consul/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/consul-195-ubuntu-xenial-97.12-20180816-034408-177564475.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/consul-195-ubuntu-xenial-97.12-20180817-001726-197719864.tgz
 - type: replace
   path: /releases/name=consul/version
   value: "195"
 - type: replace
   path: /releases/name=consul/sha1
-  value: 93bebb024666a8aa492ca299743c9dd21ee35efc
+  value: 79fa64aed8f32893d1498fa1e8497cb7c5509c75
 - type: replace
   path: /releases/name=cflinuxfs2/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cflinuxfs2-1.231.0-ubuntu-xenial-97.12-20180816-034212-450039532.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cflinuxfs2-1.231.0-ubuntu-xenial-97.12-20180817-001601-854237567.tgz
 - type: replace
   path: /releases/name=cflinuxfs2/version
   value: 1.231.0
 - type: replace
   path: /releases/name=cflinuxfs2/sha1
-  value: 6a1505db2632c8ea11d571db8549eabde3d1011f
+  value: f4f6760b423ab4a9d66c3f59ef6166a2d36b3e70
 - type: replace
   path: /releases/name=garden-runc/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/garden-runc-1.16.2-ubuntu-xenial-97.12-20180816-034446-83350389.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/garden-runc-1.16.2-ubuntu-xenial-97.12-20180817-001907-614885579.tgz
 - type: replace
   path: /releases/name=garden-runc/version
   value: 1.16.2
 - type: replace
   path: /releases/name=garden-runc/sha1
-  value: e061deda19435f03e5dc8a073a86e4d299f84a6b
+  value: 6ac7facdeb73ca7118ceeb5e4faa29f9b047418b
 - type: replace
   path: /releases/name=loggregator/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/loggregator-103.1-ubuntu-xenial-97.12-20180816-034408-177760179.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/loggregator-103.1-ubuntu-xenial-97.12-20180817-001726-195079054.tgz
 - type: replace
   path: /releases/name=loggregator/version
   value: "103.1"
 - type: replace
   path: /releases/name=loggregator/sha1
-  value: 8fc0e532c543b2a4107b274f6087ce71420fa851
+  value: 828b4c59289172013b4151006b35719f1c8fe386
 - type: replace
   path: /releases/name=go-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/go-buildpack-1.8.26-ubuntu-xenial-97.12-20180816-034154-051768882.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/go-buildpack-1.8.26-ubuntu-xenial-97.12-20180817-001601-905065025.tgz
 - type: replace
   path: /releases/name=go-buildpack/version
   value: 1.8.26
 - type: replace
   path: /releases/name=go-buildpack/sha1
-  value: 9cbee1c7620438a14fd82c232722d085219321ce
+  value: f5e7c1630756f42040d3dcd59f3b399e050decfe
 - type: replace
   path: /releases/name=php-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/php-buildpack-4.3.59-ubuntu-xenial-97.12-20180816-034212-45150001.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/php-buildpack-4.3.59-ubuntu-xenial-97.12-20180817-001601-854007965.tgz
 - type: replace
   path: /releases/name=php-buildpack/version
   value: 4.3.59
 - type: replace
   path: /releases/name=php-buildpack/sha1
-  value: 7bbe5f8eda263a6b1014218c90b0a4a265a0eafe
+  value: 397b874479d7200c59943bae0d514fea6816a8b3
 - type: replace
   path: /releases/name=cf-smoke-tests/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-smoke-tests-40.0.6-ubuntu-xenial-97.12-20180816-034212-450192172.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-smoke-tests-40.0.6-ubuntu-xenial-97.12-20180817-001737-235221723.tgz
 - type: replace
   path: /releases/name=cf-smoke-tests/version
   value: 40.0.6
 - type: replace
   path: /releases/name=cf-smoke-tests/sha1
-  value: cb14dfd860462c4861d215192389d540d0fd6971
+  value: 24d52d83c07f1089a996c99bc06ad0c7dc66ef61
 - type: replace
   path: /releases/name=java-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/java-buildpack-4.15-ubuntu-xenial-97.12-20180816-034137-584666168.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/java-buildpack-4.15-ubuntu-xenial-97.12-20180817-001509-020067457.tgz
 - type: replace
   path: /releases/name=java-buildpack/version
   value: "4.15"
 - type: replace
   path: /releases/name=java-buildpack/sha1
-  value: 4c0b8737d1862363265b2fbc861470aaa31e60da
+  value: dce9e35bdb58a0398bc54caf4f0c9aa2e8262e86
 - type: replace
   path: /releases/name=ruby-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/ruby-buildpack-1.7.22-ubuntu-xenial-97.12-20180816-034212-301181167.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/ruby-buildpack-1.7.22-ubuntu-xenial-97.12-20180817-001601-89346521.tgz
 - type: replace
   path: /releases/name=ruby-buildpack/version
   value: 1.7.22
 - type: replace
   path: /releases/name=ruby-buildpack/sha1
-  value: c9149ab9be66918de0b8d135a15e5466dac1e0da
+  value: 4ee18d711d4773e1d3a5aaa91193332fdb7db27c
 - type: replace
   path: /releases/name=statsd-injector/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/statsd-injector-1.3.0-ubuntu-xenial-97.12-20180816-034212-300979529.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/statsd-injector-1.3.0-ubuntu-xenial-97.12-20180817-001601-866817859.tgz
 - type: replace
   path: /releases/name=statsd-injector/version
   value: 1.3.0
 - type: replace
   path: /releases/name=statsd-injector/sha1
-  value: 275ba156b6b1e3d7fc6a817d5b11ca2802c797ff
+  value: a5b81fed80f3bfb2f8be75edda775e3fcf41b077
 - type: replace
   path: /releases/name=nodejs-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/nodejs-buildpack-1.6.30-ubuntu-xenial-97.12-20180816-034137-705369747.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/nodejs-buildpack-1.6.30-ubuntu-xenial-97.12-20180817-001601-879052144.tgz
 - type: replace
   path: /releases/name=nodejs-buildpack/version
   value: 1.6.30
 - type: replace
   path: /releases/name=nodejs-buildpack/sha1
-  value: acda8dece001ab49d27548ce673665f4b0dc26f0
+  value: c385057455b61a2d208a75053af4a971df50f950
 - type: replace
   path: /releases/name=python-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/python-buildpack-1.6.20-ubuntu-xenial-97.12-20180816-034223-867512306.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/python-buildpack-1.6.20-ubuntu-xenial-97.12-20180817-001526-242594289.tgz
 - type: replace
   path: /releases/name=python-buildpack/version
   value: 1.6.20
 - type: replace
   path: /releases/name=python-buildpack/sha1
-  value: f44a8db174f5ae22e2859c968701a5a16176fad1
+  value: d350be3cfe4b108dc39b204043e3760acfea1747
 - type: replace
   path: /releases/name=staticfile-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/staticfile-buildpack-1.4.31-ubuntu-xenial-97.12-20180816-034154-051891469.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/staticfile-buildpack-1.4.29-ubuntu-xenial-97.12-20180817-001907-612540536.tgz
 - type: replace
   path: /releases/name=staticfile-buildpack/version
-  value: 1.4.31
+  value: 1.4.29
 - type: replace
   path: /releases/name=staticfile-buildpack/sha1
-  value: 58fed0461edfb86a830e525f475cbfab89794ba4
+  value: ee56526dcf2a5a06adddf7f08ecbb321b0c168b8
 - type: replace
   path: /releases/name=dotnet-core-buildpack/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/dotnet-core-buildpack-2.1.4-ubuntu-xenial-97.12-20180816-034212-450077155.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/dotnet-core-buildpack-2.1.4-ubuntu-xenial-97.12-20180817-001408-955866324.tgz
 - type: replace
   path: /releases/name=dotnet-core-buildpack/version
   value: 2.1.4
 - type: replace
   path: /releases/name=dotnet-core-buildpack/sha1
-  value: 95675b64cea4483b8d9ea4e0fbc4d65c3eb88e99
+  value: 3bb276f4c02d87dd8a90fa2696dd5750fae38507
 - type: replace
   path: /releases/name=cf-syslog-drain/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-syslog-drain-7.0-ubuntu-xenial-97.12-20180816-034325-852553601.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/cf-syslog-drain-7.0-ubuntu-xenial-97.12-20180817-001726-715156538.tgz
 - type: replace
   path: /releases/name=cf-syslog-drain/version
   value: "7.0"
 - type: replace
   path: /releases/name=cf-syslog-drain/sha1
-  value: 60cd228e4009edd7dc814e462315a9986db34031
+  value: 2b9436deb8c2eb80ad7c4e339bae3e61cc5896bd
 - type: replace
   path: /releases/name=bpm/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/bpm-0.10.0-ubuntu-xenial-97.12-20180816-034259-849800825.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/bpm-0.10.0-ubuntu-xenial-97.12-20180817-001726-198554438.tgz
 - type: replace
   path: /releases/name=bpm/version
   value: 0.10.0
 - type: replace
   path: /releases/name=bpm/sha1
-  value: e7bf99273648f9dd42cc7f765167132510462931
+  value: 74f675c26e8791af3a395d3b66dcc2a329ccb9da
 - type: replace
   path: /releases/name=loggregator-agent/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/loggregator-agent-2.0-ubuntu-xenial-97.12-20180816-034259-850164274.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/loggregator-agent-2.0-ubuntu-xenial-97.12-20180817-001601-853918833.tgz
 - type: replace
   path: /releases/name=loggregator-agent/version
   value: "2.0"
 - type: replace
   path: /releases/name=loggregator-agent/sha1
-  value: 75588ed0a57ffc1a74c64a71403af88eb541efdc
+  value: f2a8a5e5aa47a426413ab69201dbd7990af9bbd2
 - type: replace
   path: /releases/name=silk/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/silk-2.13.0-ubuntu-xenial-97.12-20180816-034408-178088173.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/silk-2.13.0-ubuntu-xenial-97.12-20180817-001726-107526333.tgz
 - type: replace
   path: /releases/name=silk/version
   value: 2.13.0
 - type: replace
   path: /releases/name=silk/sha1
-  value: ad04e8757ee7f79988e5e36bce394dfac2422ed7
+  value: e84bbd4d894516e98be51016bda111afe19c8166
 - type: replace
   path: /releases/name=bpm/stemcell?
   value:
@@ -369,19 +369,19 @@
     version: "97.12"
 - type: replace
   path: /releases/name=bosh-dns-aliases/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/bosh-dns-aliases-0.0.3-ubuntu-xenial-97.12-20180816-034120-453754362.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/bosh-dns-aliases-0.0.3-ubuntu-xenial-97.12-20180817-001526-24966728.tgz
 - type: replace
   path: /releases/name=bosh-dns-aliases/version
   value: 0.0.3
 - type: replace
   path: /releases/name=bosh-dns-aliases/sha1
-  value: d816479e5ca89bf86a44cf10872bb6f842843fa2
+  value: e0a328cede255acab15df107419dd02e900ca070
 - type: replace
   path: /releases/name=log-cache/url
-  value: https://storage.googleapis.com/cf-deployment-compiled-releases/log-cache-1.3.0-ubuntu-xenial-97.12-20180816-034408-178350556.tgz
+  value: https://storage.googleapis.com/cf-deployment-compiled-releases/log-cache-1.3.0-ubuntu-xenial-97.12-20180817-001726-297883287.tgz
 - type: replace
   path: /releases/name=log-cache/version
   value: 1.3.0
 - type: replace
   path: /releases/name=log-cache/sha1
-  value: 622cc93c2bd9efee5a036cdc410a54150e0fdd32
+  value: 030d308941c62dbfb54594dd7a971299beb50f21
