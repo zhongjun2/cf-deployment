@@ -4,5 +4,5 @@
   value:
     name: "jumpbox"
     version: "4.4.4"
-    url: "https://bosh.io/d/github.com/cloudfoundry-community/jumpbox-boshrelease?v=4.4.5"
-    sha1: "f1d9b39f89e7a80e6f5459a37f4142e2dc66a362"
+    url: "https://bosh.io/d/github.com/cloudfoundry-community/jumpbox-boshrelease?v=4.4.4"
+    sha1: "9731f652fd3e84430ae2e48ec0899521272a2664"
